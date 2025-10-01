@@ -1,0 +1,112 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct noeud{
+int donne;
+struct noeud*suivant;
+}noeud;
+noeud*inserfin(noeud*l,int n){
+noeud*tete,*p;
+tete=(noeud*)malloc(sizeof(noeud));
+printf("entre la tete:");
+scanf("%d",&tete->donne);
+tete->suivant=tete;
+l=tete;
+for(int i=2; i<=n; i++){
+p=(noeud*)malloc(sizeof(noeud));
+printf("entre le %d element :",i);
+scanf("%d",&p->donne);
+p->suivant=l->suivant;
+l->suivant=p;
+l=p;
+}
+return tete;
+}
+
+void affichepourtete(noeud*l){
+noeud*tete;
+tete=l;
+if(l==NULL){
+    printf("liste vide");
+}
+do{
+    printf("%d",tete->donne);
+    tete=tete->suivant;
+}
+while(tete!=l);
+
+
+}
+
+noeud*insertete(noeud*l,int n){
+noeud*tete,*p;
+tete=(noeud*)malloc(sizeof(noeud));
+printf("entre la tete de liste:");
+scanf("%d",&tete->donne);
+tete->suivant=tete;
+l=tete;
+for(int i=2; i<=n; i++){
+    p=(noeud*)malloc(sizeof(noeud));
+    printf("entre le %d element:",i);
+    scanf("%d",&p->donne);
+    p->suivant=tete;
+    l->suivant=p;
+    tete=p;
+
+}
+return tete;
+}
+void affichepourfin(noeud*l){
+noeud*tete;
+tete=l;
+do{
+    printf("%d",tete->donne);
+    tete=tete->suivant;
+}while(tete!=l);
+
+
+
+}
+
+
+int main(){
+noeud*tete,*liste;
+int n,choix;
+
+do{
+printf("\n______MENU_____\n");
+printf("1_ insertion en tete\n");
+printf("2_insertion en fin\n");
+printf("0_stop au programme\n");
+printf("que vous voulez vous faire:");
+scanf("%d",&choix);
+
+switch(choix){
+
+case 1:
+    printf("entre le nombre d'element que vous voulez:");
+scanf("%d",&n);
+    liste=insertete(tete,n);
+affichepourtete(liste);
+break;
+case 2:
+    printf("entre le nombre d'element que vous voulez:");
+scanf("%d",&n);
+    liste=inserfin(tete,n);
+    affichepourfin(liste);
+    break;
+case 0:
+    printf("fin du programme");
+    break;
+default:
+    printf("choix invalide");
+}
+}while(choix !=0);
+return 0;
+
+}
+
+
+
+
+
+
