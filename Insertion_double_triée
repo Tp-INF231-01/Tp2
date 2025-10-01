@@ -1,0 +1,166 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct cellule
+{
+    struct cellule *prec;
+    float info;
+    struct cellule *suiv;
+}Cellule;
+typedef Cellule *liste;
+liste cree_list(void)
+{
+    return NULL;
+}
+liste inser_tete(liste p,float val)
+{
+    liste t;
+    t=(liste)malloc(sizeof(Cellule));
+    t->prec=NULL;
+    t->info=val;
+    t->suiv=NULL;
+    if(p==NULL)
+    {
+        return t;
+    }
+    t->suiv=p;
+    p->prec=t;
+    p=t;
+    return p;
+}
+void aff_list(liste p)
+{
+    if(p==NULL)
+    {
+        fprintf(stderr,"\nLa liste est vide\n");
+    }
+    while(p!=NULL)
+    {
+        printf("\n[%.2f]\n",p->info);
+        p=p->suiv;
+    }
+}
+liste inser_fin(liste p,float val)
+{
+    liste t,k;
+    k=(liste)malloc(sizeof(Cellule));
+    t=(liste)malloc(sizeof(Cellule));
+    t->info=val;
+    t->prec=NULL;
+    t->suiv=NULL;
+    k=p;
+    if(p==NULL)
+    {
+        return t;
+    }
+    while(k->suiv!=NULL)
+    {
+        k->suiv->prec=k;
+        k=k->suiv;
+    }
+    k->suiv=t;
+    t->prec=k;
+    return p;
+}
+typedef enum
+{
+    false,true
+}Bool;
+int main()
+{
+    float val,elmt;int a,b,choix;
+    Bool trouve;
+    trouve=false;
+    liste p=cree_list();
+    reper:printf("\n\t-----------MENU-----------");
+    printf("\n1.Cree une liste dejà trie.");
+    printf("\n2.Inserer un element.");
+    printf("\n3.Afficher la liste.");
+    printf("\n4.Quitter le programme.\n");
+    printf("\nCHOIX:");
+    scanf("%d",&choix);
+
+    switch(choix)
+    {
+        case 1:
+            cas:printf("\n");
+            printf("\n\t-------------Creation d'une liste trie------------\n");
+            printf("\nEntrer le nombre d'element:");
+            scanf("%d",&a);
+            printf("\nComment souhaitez vous ajouter les elements?");
+            printf("\n1.En tete\t");
+            printf("\n2.En queue");
+            printf("\nReponse:");
+            scanf("%d",&b);
+            if(b==2)
+            {
+                for(int i=0;i<a;i++)
+                {
+                    printf("\nEntrer l'element n°%d:",i);
+                    scanf("%f",&val);
+                    p=inser_fin(p,val);
+                }
+            }else{
+            if(b==1){
+            for(int i=0;i<a;i++)
+                {
+                    printf("\nEntrer l'element n°%d:",a);
+                    scanf("%f",&val);
+                    p=inser_tete(p,val);
+                    a--;
+                }
+            }
+            }
+            goto reper;
+        case 2:
+            printf("\nEntrer l'element a inserer:");
+            scanf("%f",&elmt);
+            if(p==NULL)
+            {
+                printf("\nLa liste est vide donc rien a trier.");
+                printf("\nIL faut d'abord cree la liste!!!");
+                goto cas;
+            }
+            if(p->info>elmt)
+            {
+                p=inser_tete(p,elmt);
+                goto reper;
+            }
+            liste fd,gr;
+            gr=(liste)malloc(sizeof(Cellule));
+            gr=p;
+            fd=(liste)malloc(sizeof(Cellule));
+            fd->info=elmt;
+            fd->prec=NULL;
+            fd->suiv=NULL;
+            while(gr->info<elmt)
+            {
+                if(gr->suiv==NULL)
+                {
+                    p=inser_fin(p,elmt);
+                    goto reper;
+                }
+                gr->suiv->prec=gr;
+                gr=gr->suiv;
+            }
+            gr->prec->suiv=fd;
+            fd->prec=gr->prec;
+            fd->suiv=gr;
+            goto reper;
+        case 3:
+            aff_list(p);
+            goto reper;
+        case 4:
+            fprintf(stderr,"\nMerci :) et nous vous remercions d'avoir essayer ce programme.\n");
+            printf("\nPour plus d'information vous pouvez ecrire a cette adresse:jdn26@gmail.com");
+            return 0;
+        default:
+            printf("\nS'il vous plait bien vouloir respecter le menu!!");
+            goto reper;
+
+
+
+
+
+    }
+
+}
