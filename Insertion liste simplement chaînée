@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Node {
+    int data;
+    struct Node*next;
+} Node;
+// Fonction pour insérer un nouvel élément dans la liste triée
+Node* createNode(int value){
+    Node*newNode=(Node*)malloc(sizeof(Node));
+    newNode->data=value;
+    newNode->next=NULL;
+    return newNode;
+    }
+    Node*insertSorted(Node*head,int value){
+    Node* newNode =malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    if(head == NULL || value < head->data){
+        newNode->next = head;
+        return newNode;
+    }
+    Node*current = head;
+    while (current->next !=NULL && current->next->data < value){
+        current = current->next;
+    }
+    newNode->next = current->next;
+    current->next=newNode;
+    return head;
+}
+// Fonction pour afficher la liste
+void printList(Node* head){
+    Node* current= head;
+    while (current !=NULL){
+        printf("%d->",current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+int main(){
+    Node* head = NULL;
+    head = insertSorted(head, 10);
+    head = insertSorted(head, 5);
+    head = insertSorted(head, 50);
+    printf("Liste triee:");
+    printList(head);
+    return 0;
+}
