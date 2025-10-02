@@ -13,7 +13,7 @@ noeud*creenoeud(noeud*l,int n){
     l=tete;
     for(int i=2; i<=n; i++){
             p=(noeud*)malloc(sizeof(noeud));
-        printf("entre le deuxieme element");
+        printf("entre le %d element",i);
         scanf("%d",&p->donne);
     l->suivant=p;
     p->suivant=NULL;
@@ -32,7 +32,7 @@ t=t->suivant;
 }
 noeud* supprimeoccurence(noeud*tete,int s){
 noeud*t=tete;
-noeud*prec;
+noeud*prec=NULL;
 noeud*a;
 
 while(t!=NULL){
@@ -74,6 +74,11 @@ scanf("%d",&s);
 liste=supprimeoccurence(liste,s);
 affiche(liste);
 }
+
+
+
+
+
 
 
 
